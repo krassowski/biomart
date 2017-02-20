@@ -79,7 +79,7 @@ class BiomartDataset(object):
 
         r = self.server.get_request(type="filters", dataset=self.name)
         for line in r.iter_lines():
-            line = line.decode('utf8')
+            line = line.decode('utf8', 'ignore')
             if line:
                 line = line.split("\t")
                 self._filters[line[0]] = biomart.BiomartFilter(
@@ -185,7 +185,7 @@ class BiomartDataset(object):
             if not attributes and self._attribute_pages:
                 # get default attribute page
                 page = next(filter(lambda attr_page: attr_page.is_default, self._attribute_pages.values()))
-                
+
                 # get default attributes from page
                 attributes = [a.name for a in page.attributes.values() if a.is_default]
 
